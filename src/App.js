@@ -20,10 +20,23 @@ function App() {
 		return () => unsub();
 	}, []);
 
+	const deleteNote = () => {};
+
+	const selectNote = (note, index) => {
+		setSelectedNote(note);
+		setSelectedNoteIndex(index);
+	};
+
+	const newNote = () => {};
+
+	const noteUpdate = (id, notesObj) => {
+		console.log(id, notesObj);
+	};
+
 	return (
 		<div className="app-container">
-			<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} />
-			<Editor />
+			<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} newNote={newNote} />
+			{selectedNote && <Editor notes={notes} selectedNote={selectedNote} selectedNoteIndex={selectedNoteIndex} noteUpdate={noteUpdate} />}
 		</div>
 	);
 }

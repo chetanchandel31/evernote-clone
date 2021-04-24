@@ -17,8 +17,8 @@ const SidebarItem = ({ _index, _note, selectedNoteIndex, selectNote, deleteNote 
 				<div className={classes.textSection} onClick={() => selectNote(_note, _index)}>
 					<ListItemText primary={_note.title} secondary={removeHTMLTags(_note.body)} />
 				</div>
+				<Delete className={classes.deleteIcon} onClick={() => deleteHandler(_note)} />
 			</ListItem>
-			<Delete className={classes.deleteIcon} onClick={() => deleteHandler(_note)} />
 		</div>
 	);
 };

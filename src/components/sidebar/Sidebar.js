@@ -3,7 +3,7 @@ import { useState } from "react";
 import SidebarItem from "./sidebaritem/SidebarItem";
 import useStyles from "./styles";
 
-const Sidebar = ({ notes, selectedNoteIndex }) => {
+const Sidebar = ({ notes, selectedNoteIndex, selectNote }) => {
 	const [addingNote, setAddingNote] = useState(false);
 	const [title, setTitle] = useState(null);
 	const classes = useStyles();
@@ -22,9 +22,9 @@ const Sidebar = ({ notes, selectedNoteIndex }) => {
 		console.log(addingNote, title);
 	};
 
-	const selectNote = () => {
-		console.log("select note");
-	};
+	// const selectNote = () => {
+	// 	console.log("select note");
+	// };
 
 	const deleteNote = () => {
 		console.log("delete note");
