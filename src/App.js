@@ -22,7 +22,7 @@ function App() {
 
 	return (
 		<div className="app-container">
-			<Sidebar />
+			<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} />
 			<Editor />
 		</div>
 	);
