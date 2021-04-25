@@ -11,8 +11,10 @@ const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		//debounce
-		let timeout = setTimeout(() => noteUpdate(id, { title, body: text }), 1500);
+		//using debounce to update firestore collection
+		let timeout = setTimeout(() => {
+			if (text) noteUpdate(id, { title, body: text });
+		}, 1500);
 
 		return () => clearTimeout(timeout);
 	}, [inputChangeTracker]);

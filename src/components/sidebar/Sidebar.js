@@ -3,9 +3,9 @@ import { useState } from "react";
 import SidebarItem from "./sidebaritem/SidebarItem";
 import useStyles from "./styles";
 
-const Sidebar = ({ notes, selectedNoteIndex, selectNote }) => {
+const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote }) => {
 	const [addingNote, setAddingNote] = useState(false);
-	const [title, setTitle] = useState(null);
+	const [title, setTitle] = useState(""); //when adding new note, this will be its title
 	const classes = useStyles();
 
 	const newNoteBtnClick = () => {
@@ -19,7 +19,10 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote }) => {
 	};
 
 	const submitNoteHandler = () => {
-		console.log(addingNote, title);
+		// console.log(addingNote, title);
+		createNewNote(title);
+		setAddingNote(false);
+		setTitle("");
 	};
 
 	// const selectNote = () => {
