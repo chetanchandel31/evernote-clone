@@ -1,8 +1,9 @@
+import { BorderColor } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import useStyles from "./styles";
 
-const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
+const Editor = ({ selectedNote, noteUpdate }) => {
 	const [text, setText] = useState("");
 	const [title, setTitle] = useState("");
 	const [id, setId] = useState("");
@@ -17,6 +18,7 @@ const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
 		}, 1500);
 
 		return () => clearTimeout(timeout);
+		// eslint-disable-next-line
 	}, [inputChangeTracker]);
 
 	useEffect(() => {
@@ -27,8 +29,9 @@ const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
 		setId(id);
 	}, [selectedNote]);
 
-	const updateBody = val => {
-		setText(val);
+	const updateNote = (newTitle, newBody) => {
+		if (newTitle) setTitle(newTitle);
+		else if (newBody) setText(newBody);
 		update();
 	};
 
@@ -39,7 +42,9 @@ const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
 	//make it autofocus on editor upon mount
 	return (
 		<div className={classes.editorContainer}>
-			<ReactQuill value={text} onChange={updateBody} />
+			<BorderColor className={classes.editIcon} />
+			<input className={classes.titleInput} value={title} placeholder="hello" onChange={({ target }) => updateNote(target.value)} />
+			<ReactQuill value={text} onChange={newBody => updateNote(undefined, newBody)} />
 		</div>
 	);
 };

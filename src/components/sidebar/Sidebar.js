@@ -41,7 +41,7 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote, deleteNo
 
 			{addingNote && (
 				<div>
-					<input type="text" className={classes.newNoteInput} placeholder="Enter note title" onChange={({ target }) => updateTitle(target.value)} />
+					<input type="text" className={classes.newNoteInput} placeholder="Note title..." onChange={({ target }) => updateTitle(target.value)} autoFocus />
 					<Button className={classes.newNoteSubmitBtn} onClick={submitNoteHandler}>
 						Submit note
 					</Button>

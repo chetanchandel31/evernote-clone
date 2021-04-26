@@ -7,13 +7,12 @@ import { firestore, serverTimestamp } from "./firebase/firebase";
 function App() {
 	const collectionRef = firestore.collection("notes");
 
-	const [notes, setNotes] = useState(null);
-	const [selectedNote, setSelectedNote] = useState(null); //handles editor's content
-	const [selectedNoteIndex, setSelectedNoteIndex] = useState(null); //handles highlighted note in sidebar
-
+	const [selectedNote, setSelectedNote] = useState(null); //for editor's content
+	const [selectedNoteIndex, setSelectedNoteIndex] = useState(null); //for highlighted note in sidebar
 	const [newNoteId, setNewNoteId] = useState("");
 
-	//maybe make a custom hook for it later?
+	//maybe put it inside a custom hook later?
+	const [notes, setNotes] = useState(null);
 	useEffect(() => {
 		const unsub = collectionRef.onSnapshot(snap => {
 			let notes = snap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
@@ -22,6 +21,7 @@ function App() {
 		});
 
 		return () => unsub();
+		// eslint-disable-next-line
 	}, []);
 
 	//add new note to firebase collection and change selected note and selected note index
@@ -67,7 +67,7 @@ function App() {
 	return (
 		<div className="app-container">
 			<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
-			{selectedNote && <Editor notes={notes} selectedNote={selectedNote} selectedNoteIndex={selectedNoteIndex} noteUpdate={noteUpdate} />}
+			{selectedNote && <Editor selectedNote={selectedNote} noteUpdate={noteUpdate} />}
 		</div>
 	);
 }
