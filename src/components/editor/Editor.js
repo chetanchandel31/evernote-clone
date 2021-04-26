@@ -13,14 +13,14 @@ const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
 	useEffect(() => {
 		//using debounce to update firestore collection
 		let timeout = setTimeout(() => {
-			if (text) noteUpdate(id, { title, body: text });
+			if (id) noteUpdate(id, { title, body: text });
 		}, 1500);
 
 		return () => clearTimeout(timeout);
 	}, [inputChangeTracker]);
 
 	useEffect(() => {
-		//try to shorten it later?
+		//try to shorten it later? do we even need title?
 		const { body, title, id } = selectedNote;
 		setText(body);
 		setTitle(title);
@@ -36,6 +36,7 @@ const Editor = ({ notes, selectedNote, selectedNoteIndex, noteUpdate }) => {
 		setInputChangeTracker(prevState => prevState + 1);
 	};
 
+	//make it autofocus on editor upon mount
 	return (
 		<div className={classes.editorContainer}>
 			<ReactQuill value={text} onChange={updateBody} />

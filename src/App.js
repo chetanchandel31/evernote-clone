@@ -5,15 +5,17 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { firestore, serverTimestamp } from "./firebase/firebase";
 
 function App() {
+	const collectionRef = firestore.collection("notes");
+
 	const [notes, setNotes] = useState(null);
-	const [selectedNote, setSelectedNote] = useState(null);
-	const [selectedNoteIndex, setSelectedNoteIndex] = useState(null);
+	const [selectedNote, setSelectedNote] = useState(null); //handles editor's content
+	const [selectedNoteIndex, setSelectedNoteIndex] = useState(null); //handles highlighted note in sidebar
 
 	const [newNoteId, setNewNoteId] = useState("");
 
 	//maybe make a custom hook for it later?
 	useEffect(() => {
-		const unsub = firestore.collection("notes").onSnapshot(snap => {
+		const unsub = collectionRef.onSnapshot(snap => {
 			let notes = snap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 			console.log(notes);
 			setNotes(notes);
@@ -22,31 +24,42 @@ function App() {
 		return () => unsub();
 	}, []);
 
+	//add new note to firebase collection and change selected note and selected note index
+	const createNewNote = async title => {
+		const newNote = await collectionRef.add({ title, body: "" });
+		setNewNoteId(newNote.id);
+	};
+
 	useEffect(() => {
-		if (newNoteId) {
-			const newNoteIndex = notes.findIndex(note => note.id === newNoteId);
+		//if we've got new note id and that id's note is found in "notes" state, select that note and reset new note id
+		const newNoteIndex = notes?.findIndex(note => note.id === newNoteId);
+		if (newNoteId && newNoteIndex > -1) {
 			setSelectedNote(notes[newNoteIndex]);
 			setSelectedNoteIndex(newNoteIndex);
-			console.log(newNoteIndex);
+			setNewNoteId("");
 		}
 	}, [notes, newNoteId]);
 
-	const deleteNote = () => {};
+	const deleteNote = id => {
+		const deletingNoteIndex = notes.findIndex(note => note.id === id);
+
+		if (deletingNoteIndex < selectedNoteIndex && notes.length > 1) setSelectedNoteIndex(prevIndex => prevIndex - 1);
+
+		if (deletingNoteIndex === selectedNoteIndex || notes.length === 1) {
+			setSelectedNote(null);
+			setSelectedNoteIndex(null);
+		}
+
+		collectionRef.doc(id).delete();
+	};
 
 	const selectNote = (note, index) => {
 		setSelectedNote(note);
 		setSelectedNoteIndex(index);
 	};
 
-	//add new note to firebase collection and change selected note and selected note index
-	const createNewNote = async title => {
-		const newNote = await firestore.collection("notes").add({ title, body: "" });
-		setNewNoteId(newNote.id);
-	};
-
 	const noteUpdate = (id, notesObj) => {
-		firestore
-			.collection("notes")
+		collectionRef
 			.doc(id) //see if we can only update body
 			.set({ ...notesObj, createdAt: serverTimestamp() }, { merge: true });
 	};
