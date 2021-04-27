@@ -1,5 +1,5 @@
 import { BorderColor } from "@material-ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import useDebounce from "../../hooks/useDebounce";
 import useStyles from "./styles";
@@ -10,6 +10,11 @@ const Editor = ({ selectedNote, noteUpdate }) => {
 	const [id, setId] = useState("");
 
 	const classes = useStyles();
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		inputRef.current?.focus();
+	}, [selectedNote]);
 
 	const update = useDebounce(() => {
 		if (id) noteUpdate(id, { title, body: text });
@@ -29,12 +34,11 @@ const Editor = ({ selectedNote, noteUpdate }) => {
 		update();
 	};
 
-	//make it autofocus on editor upon mount
 	return (
 		<div className={classes.editorContainer}>
 			<BorderColor className={classes.editIcon} />
 			<input className={classes.titleInput} value={title} placeholder="hello" onChange={({ target }) => updateNote(target.value)} />
-			<ReactQuill value={text} onChange={newBody => updateNote(undefined, newBody)} />
+			<ReactQuill ref={inputRef} value={text} onChange={newBody => updateNote(undefined, newBody)} />
 		</div>
 	);
 };
