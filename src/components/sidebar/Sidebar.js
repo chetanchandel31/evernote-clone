@@ -11,7 +11,6 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote, deleteNo
 	const newNoteBtnClick = () => {
 		setAddingNote(prevState => !prevState);
 		setTitle(null);
-		console.log("new note button clicked");
 	};
 
 	const updateTitle = text => {
@@ -24,14 +23,6 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote, deleteNo
 		setAddingNote(false);
 		setTitle("");
 	};
-
-	// const selectNote = () => {
-	// 	console.log("select note");
-	// };
-
-	// const deleteNote = () => {
-	// 	console.log("delete note");
-	// };
 
 	return (
 		<div className={classes.sidebarContainer}>
