@@ -6,7 +6,6 @@ import useStyles from "./styles";
 const SidebarItem = ({ _index, _note, selectedNoteIndex, selectNote, deleteNote }) => {
 	const classes = useStyles();
 
-	//try to implement confirm in parent comp only
 	const deleteHandler = note => {
 		if (window.confirm(`Are you sure you want to delete ${note.title}`)) deleteNote(note.id);
 	};
