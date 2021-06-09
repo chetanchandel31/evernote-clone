@@ -36,8 +36,11 @@ const Editor = ({ selectedNote, noteUpdate }) => {
 
 	return (
 		<div className={classes.editorContainer}>
-			<BorderColor className={classes.editIcon} />
-			<input className={classes.titleInput} value={title} placeholder="hello" onChange={({ target }) => updateNote(target.value)} />
+			<div className={classes.inputContainer}>
+				<BorderColor className={classes.editIcon} />
+				<input className={classes.titleInput} value={title} placeholder="hello" onChange={({ target }) => updateNote(target.value)} />
+			</div>
+
 			<ReactQuill ref={inputRef} value={text} onChange={newBody => updateNote(undefined, newBody)} />
 		</div>
 	);

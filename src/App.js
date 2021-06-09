@@ -5,6 +5,10 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { firestore, serverTimestamp } from "./firebase/firebase";
 import useFirestore from "./hooks/useFirestore";
 
+import MenuIcon from "@material-ui/icons/Menu";
+import { AppBar, Drawer, Hidden, IconButton, Toolbar } from "@material-ui/core";
+import useStyles from "./styles";
+
 function App() {
 	const collectionRef = firestore.collection("notes");
 
@@ -12,6 +16,8 @@ function App() {
 	const [selectedNoteIndex, setSelectedNoteIndex] = useState(null); //for highlighted note in sidebar
 	const [newNoteId, setNewNoteId] = useState("");
 	const [notes] = useFirestore("notes");
+
+	const classes = useStyles();
 
 	//add new note to firebase collection and change selected note and selected note index
 	const createNewNote = async title => {
@@ -53,9 +59,34 @@ function App() {
 			.set({ ...notesObj, createdAt: serverTimestamp() }, { merge: true });
 	};
 
+	const [open, setOpen] = useState(false);
+
 	return (
-		<div className="app-container">
-			<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
+		<div className={`${classes.root} app-container`}>
+			<div>
+				<AppBar position="fixed" className={classes.appBar}>
+					<Toolbar>
+						<IconButton className={classes.menuButton} onClick={() => setOpen(true)} edge="start" color="inherit" aria-label="menu">
+							<MenuIcon />
+						</IconButton>
+					</Toolbar>
+				</AppBar>
+			</div>
+
+			<Toolbar />
+
+			<Hidden smDown implementation="css">
+				<Drawer className={classes.drawer} variant="permanent" anchor="left">
+					<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
+				</Drawer>
+			</Hidden>
+
+			<Hidden smUp implementation="css">
+				<Drawer className={classes.drawer} variant="temporary" anchor="left" open={open} onClose={() => setOpen(false)}>
+					<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
+				</Drawer>
+			</Hidden>
+
 			{selectedNote && <Editor selectedNote={selectedNote} noteUpdate={noteUpdate} />}
 		</div>
 	);

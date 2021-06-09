@@ -31,12 +31,16 @@ export default makeStyles(theme => ({
 	},
 	sidebarContainer: {
 		marginTop: "0px",
-		width: "300px",
+		width: "250px",
 		height: "100%",
 		boxSizing: "border-box",
 		float: "left",
 		overflowY: "scroll",
 		overflowX: "hidden",
+
+		"&::-webkit-scrollbar": {
+			display: "none",
+		},
 	},
 	newNoteInput: {
 		width: "100%",

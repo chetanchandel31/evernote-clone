@@ -1,4 +1,4 @@
-import { Button, Divider, List } from "@material-ui/core";
+import { Button, Divider, List, Toolbar } from "@material-ui/core";
 import { useState } from "react";
 import SidebarItem from "./sidebaritem/SidebarItem";
 import useStyles from "./styles";
@@ -26,6 +26,7 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote, deleteNo
 
 	return (
 		<div className={classes.sidebarContainer}>
+			<Toolbar />
 			<Button className={classes.newNoteBtn} onClick={newNoteBtnClick}>
 				New note
 			</Button>

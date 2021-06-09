@@ -12,8 +12,8 @@ const SidebarItem = ({ _index, _note, selectedNoteIndex, selectNote, deleteNote 
 
 	return (
 		<div key={_index}>
-			<ListItem className={classes.listItem} selected={_index === selectedNoteIndex} alignItems="flex-start">
-				<div className={classes.textSection} onClick={() => selectNote(_note, _index)}>
+			<ListItem className={classes.listItem} onClick={() => selectNote(_note, _index)} selected={_index === selectedNoteIndex} alignItems="flex-start">
+				<div className={classes.textSection}>
 					<ListItemText primary={_note.title} secondary={removeHTMLTags(_note.body.slice(0, 30) + "...")} />
 				</div>
 				<Delete className={classes.deleteIcon} onClick={() => deleteHandler(_note)} />

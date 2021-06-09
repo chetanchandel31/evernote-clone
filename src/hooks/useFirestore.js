@@ -6,7 +6,6 @@ const useFirestore = collection => {
 	useEffect(() => {
 		const unsub = firestore.collection(collection).onSnapshot(snap => {
 			let documents = snap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-			console.log(documents);
 			setDocuments(documents);
 		});
 
