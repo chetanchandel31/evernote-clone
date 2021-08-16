@@ -36,6 +36,9 @@ body {
 .ql-editor {
 	cursor: text;
 }
+.ql-container::-webkit-scrollbar {
+	display: none;
+}
 .MuiListItem-root.Mui-selected {
 	background-color: #d4d8e8 !important;
 }
