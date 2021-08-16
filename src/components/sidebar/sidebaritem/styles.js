@@ -5,14 +5,17 @@ export default makeStyles(theme => ({
 		cursor: "pointer",
 	},
 	textSection: {
-		maxWidth: "85%",
+		width: "85%",
+		overflow: "hidden",
 	},
 	deleteIcon: {
 		position: "absolute",
 		right: "5px",
-		top: "calc(50% - 15px)",
+		top: "50%",
+		transform: "translate(0, -50%)",
+		color: "#001e1d",
 		"&:hover": {
-			color: "red",
+			color: "#e16162",
 		},
 	},
 }));

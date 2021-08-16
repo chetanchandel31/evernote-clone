@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap");
+
+* {
+	font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
 html,
 body {
 	height: 100%;
@@ -7,6 +13,7 @@ body {
 	padding: 0;
 	overflow: hidden;
 }
+
 #root {
 	height: 100%;
 	box-sizing: border-box;

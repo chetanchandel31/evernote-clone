@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles(theme => ({
 	root: {
-		backgroundColor: theme.palette.background.paper,
+		backgroundColor: "#abd1c6",
 		height: "calc(100% - 35px)",
 		position: "absolute",
 		left: "0",
@@ -23,10 +23,10 @@ export default makeStyles(theme => ({
 		height: "35px",
 		borderBottom: "1px solid black",
 		borderRadius: "0px",
-		backgroundColor: "#29487d",
+		backgroundColor: "#f9bc60",
 		color: "white",
 		"&:hover": {
-			backgroundColor: "#88a2ce",
+			backgroundColor: "#f9bc60",
 		},
 	},
 	sidebarContainer: {
@@ -37,6 +37,7 @@ export default makeStyles(theme => ({
 		float: "left",
 		overflowY: "scroll",
 		overflowX: "hidden",
+		backgroundColor: "#abd1c6",
 
 		"&::-webkit-scrollbar": {
 			display: "none",
@@ -55,8 +56,11 @@ export default makeStyles(theme => ({
 	},
 	newNoteSubmitBtn: {
 		width: "100%",
-		backgroundColor: "#28787c",
+		backgroundColor: "#004643",
 		borderRadius: "0px",
 		color: "white",
+		"&:hover": {
+			backgroundColor: "#004643",
+		},
 	},
 }));

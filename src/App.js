@@ -6,10 +6,17 @@ import { firestore, serverTimestamp } from "./firebase/firebase";
 import useFirestore from "./hooks/useFirestore";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import { AppBar, Drawer, Hidden, IconButton, Toolbar } from "@material-ui/core";
+import { AppBar, Drawer, Hidden, IconButton, Toolbar, Typography, Box } from "@material-ui/core";
 import useStyles from "./styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 function App() {
+	const theme = createMuiTheme({
+		typography: {
+			fontFamily: ["Atkinson Hyperlegible", "sans-serif"].join(","),
+		},
+	});
+
 	const collectionRef = firestore.collection("notes");
 
 	const [selectedNote, setSelectedNote] = useState(null); //for editor's content
@@ -62,33 +69,40 @@ function App() {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<div className={`${classes.root} app-container`}>
-			<div>
-				<AppBar position="fixed" className={classes.appBar}>
-					<Toolbar>
-						<IconButton className={classes.menuButton} onClick={() => setOpen(true)} edge="start" color="inherit" aria-label="menu">
-							<MenuIcon />
-						</IconButton>
-					</Toolbar>
-				</AppBar>
+		<ThemeProvider theme={theme}>
+			<div className={`${classes.root} app-container`}>
+				<div>
+					<AppBar position="fixed" className={classes.appBar}>
+						<Toolbar>
+							<IconButton className={classes.menuButton} onClick={() => setOpen(true)} edge="start" color="inherit" aria-label="menu">
+								<MenuIcon />
+							</IconButton>
+							<Typography variant="h4" className={classes.mainHeading}>
+								<Box textAlign="center" fontStyle="italic">
+									Notes Zone
+								</Box>
+							</Typography>
+						</Toolbar>
+					</AppBar>
+				</div>
+
+				<Toolbar />
+
+				<Hidden smDown implementation="css">
+					<Drawer className={classes.drawer} variant="permanent" anchor="left">
+						<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
+					</Drawer>
+				</Hidden>
+
+				<Hidden smUp implementation="css">
+					<Drawer className={classes.drawer} variant="temporary" anchor="left" open={open} onClose={() => setOpen(false)}>
+						<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
+					</Drawer>
+				</Hidden>
+
+				{selectedNote && <Editor selectedNote={selectedNote} noteUpdate={noteUpdate} />}
 			</div>
-
-			<Toolbar />
-
-			<Hidden smDown implementation="css">
-				<Drawer className={classes.drawer} variant="permanent" anchor="left">
-					<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
-				</Drawer>
-			</Hidden>
-
-			<Hidden smUp implementation="css">
-				<Drawer className={classes.drawer} variant="temporary" anchor="left" open={open} onClose={() => setOpen(false)}>
-					<Sidebar selectedNoteIndex={selectedNoteIndex} notes={notes} deleteNote={deleteNote} selectNote={selectNote} createNewNote={createNewNote} />
-				</Drawer>
-			</Hidden>
-
-			{selectedNote && <Editor selectedNote={selectedNote} noteUpdate={noteUpdate} />}
-		</div>
+		</ThemeProvider>
 	);
 }
 

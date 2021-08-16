@@ -18,7 +18,6 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote, deleteNo
 	};
 
 	const submitNoteHandler = () => {
-		// console.log(addingNote, title);
 		createNewNote(title);
 		setAddingNote(false);
 		setTitle("");
@@ -28,7 +27,7 @@ const Sidebar = ({ notes, selectedNoteIndex, selectNote, createNewNote, deleteNo
 		<div className={classes.sidebarContainer}>
 			<Toolbar />
 			<Button className={classes.newNoteBtn} onClick={newNoteBtnClick}>
-				New note
+				{addingNote ? "Cancel" : "New Note"}
 			</Button>
 
 			{addingNote && (

@@ -21,7 +21,6 @@ const Editor = ({ selectedNote, noteUpdate }) => {
 	}, 1500); //using debounce to update firestore collection
 
 	useEffect(() => {
-		//try to shorten it later? do we even need title?
 		const { body, title, id } = selectedNote;
 		setText(body);
 		setTitle(title);

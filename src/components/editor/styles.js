@@ -16,7 +16,7 @@ export default makeStyles(theme => ({
 		padding: "5px",
 		fontSize: "24px",
 		width: "100%",
-		backgroundColor: "#29487d",
+		backgroundColor: "#004643",
 		color: "white",
 		paddingLeft: "50px",
 	},
