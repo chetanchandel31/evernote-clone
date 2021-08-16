@@ -28,7 +28,7 @@ function App() {
 
 	//add new note to firebase collection and change selected note and selected note index
 	const createNewNote = async title => {
-		const newNote = await collectionRef.add({ title, body: "" });
+		const newNote = await collectionRef.add({ title, body: "", createdAt: serverTimestamp() });
 		setNewNoteId(newNote.id);
 	};
 
@@ -63,7 +63,7 @@ function App() {
 	const noteUpdate = (id, notesObj) => {
 		collectionRef
 			.doc(id) //see if we can only update body
-			.set({ ...notesObj, createdAt: serverTimestamp() }, { merge: true });
+			.set({ ...notesObj }, { merge: true });
 	};
 
 	const [open, setOpen] = useState(false);
